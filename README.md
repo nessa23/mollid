@@ -1,17 +1,16 @@
-# Spectral Line Fitting and Molecular Identification
+# MOLecular Lines Identification
 
-Tools for automated Gaussian fitting of radio/millimetre-wave spectra and identification of molecular emission lines against the JPL and CDMS spectral catalogues.
+Automated Gaussian fitting of spectra and identification of molecular emission lines with the JPL and CDMS catalogues.
 
----
 
-## Overview
+## Files
 
-The pipeline has two independent stages:
+The pipeline has two independent stages (aka two files):
 
 | Script | Purpose |
 |---|---|
 | `gauss_fit_new.py` | Iterative Gaussian decomposition of a 1D spectrum |
-| `match_isotopes_isomers_o.py` | Matches fitted line centres against JPL/CDMS databases and outputs a LaTeX results table |
+| `match_isotopes_isomers_o.py` | Matching lines with the JPL/CDMS databases and outputs a LaTeX results table |
 
 ---
 
@@ -52,7 +51,6 @@ The matcher queries two local SQLite databases built from the JPL and CDMS spect
 | `myjpl.db` | JPL catalogue as a SQLite database |
 | `my_cdms.db` | CDMS catalogue as a SQLite database |
 
-Scripts to build these databases from the raw catalogue files are not included here. The databases must contain a table called `line` with at least the columns: `species`, `frequency`, `uncertainty`, `einstein_coefficient`, `upper_level_energy`, `upper_level_statistical_weight`, `upper_level_quantum_numbers`, `lower_level_energy`, `lower_level_statistical_weight`, `lower_level_quantum_numbers`, `origin`, `dbsource`, `date`.
 
 Two plain-text molecule lists are also required:
 
@@ -71,7 +69,7 @@ Two plain-text molecule lists are also required:
 Edit the `__main__` block at the bottom of the file:
 
 ```python
-# Path to the input spectrum (two-column whitespace-separated: frequency[MHz]  flux[K])
+# Path to the input spectrum (two-column whitespace-separated: frequency[MHz]  intensity[K])
 name = 'path/to/your_spectrum.dat'
 
 # Spectral line width in km/s (initial guess)
@@ -114,23 +112,7 @@ candidates_file = 'path/to/candidates.dat'
 latex_output_file = 'path/to/results_table.tex'
 ```
 
-Also update the database paths near line 896–897:
 
-```python
-conn      = sqlite3.connect('path/to/myjpl.db')
-conn_cdms = sqlite3.connect('path/to/my_cdms.db')
-```
-
-And the molecule list paths in the `EnhancedMolecularLineMatcher` constructor (line 111):
-
-```python
-matcher = EnhancedMolecularLineMatcher(
-    vlsr=0.0,
-    confidence_level=0.90,
-    ism_molecules_path='path/to/ism_mol.dat',
-    isotopes_path='path/to/iso_izo.dat'
-)
-```
 
 Then run:
 
@@ -172,8 +154,8 @@ python match_isotopes_isomers_o.py
 `gauss_fit_new.py` expects a two-column ASCII file (whitespace-separated, no header):
 
 ```
-<frequency_MHz>   <flux_K>
-<frequency_MHz>   <flux_K>
+<frequency_MHz>   <intensity_K>
+<frequency_MHz>   <intensity_K>
 ...
 ```
 
