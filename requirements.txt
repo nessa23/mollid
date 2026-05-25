@@ -1,0 +1,9 @@
+numpy
+matplotlib
+scipy
+lmfit
+uncertainties
+scienceplots
+tqdm
+pandas
+scikit-learn
