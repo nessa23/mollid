@@ -9,8 +9,8 @@ The pipeline has two independent stages (aka two files):
 
 | Script | Purpose |
 |---|---|
-| `gauss_fit_new.py` | Iterative Gaussian decomposition of a 1D spectrum |
-| `match_isotopes_isomers_o.py` | Matching lines with the JPL/CDMS databases and outputs a LaTeX results table |
+| `gauss_fit_new.py` | Gaussian fit of spectrum |
+| `match_isotopes_isomers_o.py` | Lines Identification with the JPL/CDMS databases |
 
 ---
 
@@ -40,7 +40,6 @@ pandas
 scikit-learn
 ```
 
-> **Note:** `scienceplots` requires LaTeX for full functionality. If LaTeX is not installed on your system, replace `['science', 'no-latex']` with `['science', 'no-latex']` (already set in the code) — no further change is needed, but make sure `scienceplots` itself is installed.
 
 ### External databases (for `match_isotopes_isomers_o.py` only)
 
